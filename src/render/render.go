@@ -10,13 +10,14 @@ func Render(board board.Board, playerNumber int) string {
 	var size int = len(board)
 	var halfSize int = size / 2
 
-	render += "      "
+	render += "                   "
 	for i := 1; i <= halfSize; i++ {
 		render += fmt.Sprintf("%2d    ", i)
 	}
 	render += "\n\n"
 
 	render += IndicatorCurrentPlayer(playerNumber, 1)
+	render += " Player 2    "
 	for i := size - 1; i >= halfSize; i-- {
 		render += fmt.Sprintf("%2d    ", board[i])
 	}
@@ -24,6 +25,7 @@ func Render(board board.Board, playerNumber int) string {
 	render += "\n"
 
 	render += IndicatorCurrentPlayer(playerNumber, 0)
+	render += " Player 1    "
 	for _, row := range board[0:halfSize] {
 		render += fmt.Sprintf("%2d    ", row)
 	}
@@ -38,4 +40,8 @@ func IndicatorCurrentPlayer(playerNumber int, number int) string {
 		return "  =>  "
 	}
 	return "      "
+}
+
+func RenderScore(score [2] int) string {
+	return fmt.Sprintf("Score:\tPlayer (1): %d\tPlayer (2): %d\n", score[0], score[1])
 }
