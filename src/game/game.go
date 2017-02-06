@@ -78,10 +78,10 @@ func GetPosition(game Game) int {
 }
 
 func ConvertPositionPlayer(position int, indexPlayer int) int {
-		if indexPlayer == 1 {
-			return constants.PIT_COUNT - position
-		}
-		return position - 1
+	if indexPlayer == 1 {
+		return constants.PIT_COUNT - position
+	}
+	return position - 1
 }
 
 func SwitchPlayer(game Game) Game {

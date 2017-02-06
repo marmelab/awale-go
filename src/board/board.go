@@ -4,7 +4,6 @@ import (
 	"../constants"
 	"../player"
 	"errors"
-	"fmt"
 )
 
 type Board []int
@@ -69,6 +68,12 @@ func Pick(player player.Player, board Board, position int, score [2]int) ([2]int
 func IsPickPossible(board Board, player player.Player, position int) bool {
 	return player.MinPick <= position && position < player.MaxPick &&
 		2 <= board[position] && board[position] <= 3
+}
+
+func WillStravePlayer(player player.Player, board Board, position int, score [2]int) bool {
+	_, newBoard := Pick(player, board, position, score)
+	starving := (SumArray(newBoard[player.MinPick:player.MaxPick]) == 0)
+	return starving
 }
 
 func SumArray(array []int) int {
