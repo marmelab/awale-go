@@ -31,7 +31,10 @@ func CanPlayerPlayPosition(player player.Player, board Board, position int) bool
 	sumPebble := SumArray(board[player.MinPick:player.MaxPick])
 
 	if sumPebble == 0 {
-		return movePossible
+		var score [2]int
+		isStarving := WillStravePlayer(player, board, position, score)
+		canFeed := CanFeedPlayer(player, board)
+		return movePossible && (!isStarving || !canFeed)
 	}
 
 	return movePossible
@@ -74,6 +77,16 @@ func WillStravePlayer(player player.Player, board Board, position int, score [2]
 	_, newBoard := Pick(player, board, position, score)
 	starving := (SumArray(newBoard[player.MinPick:player.MaxPick]) == 0)
 	return starving
+}
+
+func CanFeedPlayer(player player.Player, board Board) bool {
+	cannot_feed := false
+	var score [2]int
+	for i := player.MinPosition; i <= player.MaxPosition; i++ {
+		starving := WillStravePlayer(player, board, i, score)
+		cannot_feed = cannot_feed && starving
+	}
+	return !cannot_feed
 }
 
 func SumArray(array []int) int {
