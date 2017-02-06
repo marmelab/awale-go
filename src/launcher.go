@@ -28,9 +28,19 @@ func main() {
 		}
 
 		currentGame = game.PlayTurn(currentGame, position)
+		currentGame = game.CheckWinner(currentGame)
 		currentGame = game.SwitchPlayer(currentGame)
 
 		fmt.Println(game.Render(currentGame))
 		fmt.Println(game.RenderScore(currentGame))
 	}
+
+	fmt.Println(RenderGameState(currentGame))
+}
+
+func RenderGameState(game game.Game) string {
+	if game.GameState == -1 {
+		return "\nNo winner, try again."
+	}
+	return fmt.Sprintf("Winner player: %d.", (game.GameState + 1))
 }

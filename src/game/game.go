@@ -15,6 +15,7 @@ type Game struct {
 	Players            []player.Player
 	Score              [2]int
 	CurrentPlayerIndex int
+	GameState          int
 }
 
 func New(players []player.Player) Game {
@@ -25,6 +26,7 @@ func New(players []player.Player) Game {
 		players,
 		score,
 		0,
+		GAME_CONTINUE,
 	}
 }
 
@@ -37,8 +39,17 @@ func RenderScore(game Game) string {
 }
 
 func IsFinished(game Game) bool {
-	var isFinish bool
-	return isFinish
+	return game.GameState != GAME_CONTINUE
+}
+
+func CheckWinner(game Game) Game {
+	if game.GameState != GAME_CONTINUE {
+		return game
+	}
+
+	player := GetCurrentPlayer(game)
+	game.GameState = board.GetWinner(player, game.Board, game.Score)
+	return game
 }
 
 func GetCurrentPlayer(game Game) player.Player {
@@ -48,12 +59,13 @@ func GetCurrentPlayer(game Game) player.Player {
 func PlayTurn(game Game, position int) Game {
 	player := GetCurrentPlayer(game)
 
-	var isStarving bool
+	isStarving := board.WillStravePlayer(player, game.Board, position, game.Score)
 	if isStarving {
 		_, newBoard := board.DealPosition(game.Board, position)
 		game.Board = newBoard
 		return game
 	}
+
 	score, newBoard := board.Pick(player, game.Board, position, game.Score)
 	game.Board = newBoard
 	game.Score = score

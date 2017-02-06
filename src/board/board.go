@@ -89,6 +89,19 @@ func CanFeedPlayer(player player.Player, board Board) bool {
 	return !cannot_feed
 }
 
+func GetWinner(player player.Player, board Board, score [2]int) int {
+	starving := (SumArray(board[player.MinPick:player.MaxPick]) == 0)
+	minScore := ((constants.PIT_COUNT * constants.PEBBLE_COUNT) / 2)
+
+	if starving || score[player.Number] > minScore {
+		return player.Number
+	} else if score[1-player.Number] > minScore {
+		return 1 - player.Number
+	}
+
+	return -2
+}
+
 func SumArray(array []int) int {
 	total := 0
 	for _, value := range array {
