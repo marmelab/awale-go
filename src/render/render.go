@@ -42,6 +42,6 @@ func IndicatorCurrentPlayer(playerNumber int, number int) string {
 	return "      "
 }
 
-func RenderScore(score [2] int) string {
+func RenderScore(score [2]int) string {
 	return fmt.Sprintf("Score:\tPlayer (1): %d\tPlayer (2): %d\n", score[0], score[1])
 }

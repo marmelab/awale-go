@@ -4,6 +4,7 @@ import (
 	"../constants"
 	"../player"
 	"errors"
+	"fmt"
 )
 
 type Board []int
@@ -19,6 +20,22 @@ func New(pitNumber int, pebbleNumber int) (Board, error) {
 		board[i] = pebbleNumber
 	}
 	return board, nil
+}
+
+func CanPlayerPlayPosition(player player.Player, board Board, position int) bool {
+	isPlayerCanMove := (player.MinPosition <= position) && (position < player.MaxPosition)
+	if !isPlayerCanMove {
+		return false
+	}
+
+	movePossible := isPlayerCanMove && (board[position] != 0)
+	sumPebble := SumArray(board[player.MinPick:player.MaxPick])
+
+	if sumPebble == 0 {
+		return movePossible
+	}
+
+	return movePossible
 }
 
 func DealPosition(board Board, position int) (int, Board) {
@@ -52,4 +69,12 @@ func Pick(player player.Player, board Board, position int, score [2]int) ([2]int
 func IsPickPossible(board Board, player player.Player, position int) bool {
 	return player.MinPick <= position && position < player.MaxPick &&
 		2 <= board[position] && board[position] <= 3
+}
+
+func SumArray(array []int) int {
+	total := 0
+	for _, value := range array {
+		total += value
+	}
+	return total
 }
