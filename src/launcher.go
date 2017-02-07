@@ -5,9 +5,25 @@ import (
 	"fmt"
 	"game"
 	"player"
+	"os"
+	"os/signal"
+	"syscall"
 )
 
+func ExitGame() {
+    fmt.Println("\n\nNo Winner !\n")
+}
+
 func main() {
+
+	c := make(chan os.Signal, 2)
+    signal.Notify(c, os.Interrupt, syscall.SIGTERM)
+    go func() {
+        <-c
+        ExitGame()
+        os.Exit(0)
+    }()
+
 
 	fmt.Println("\n############# GAME STARTED #############")
 
