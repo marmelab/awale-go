@@ -28,9 +28,8 @@ func CanPlayerPlayPosition(player player.Player, board Board, position int) bool
 	}
 
 	movePossible := isPlayerCanMove && (board[position] != 0)
-	starving := IsStarving(board, player)
 
-	if starving {
+	if IsStarving(board, player) {
 		var score [2]int
 		isStarving := WillStarvePlayer(player, board, position, score)
 		canFeed := CanFeedPlayer(player, board)
@@ -97,10 +96,9 @@ func CanFeedPlayer(player player.Player, board Board) bool {
 }
 
 func GetWinner(player player.Player, board Board, score [2]int) int {
-	starving := IsStarving(board, player)
 	minScore := ((constants.PIT_COUNT * constants.PEBBLE_COUNT) / 2)
 
-	if starving || score[player.Number] > minScore {
+	if IsStarving(board, player) || score[player.Number] > minScore {
 		return player.Number
 	} else if score[1-player.Number] > minScore {
 		return 1 - player.Number
