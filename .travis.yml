@@ -1,0 +1,11 @@
+language: go
+
+go:
+  - 1.7
+
+script:
+  - GOPATH=$(pwd) && go test -v ./...
+
+branches:
+  only:
+    - master
