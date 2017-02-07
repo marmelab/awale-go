@@ -59,7 +59,7 @@ func GetCurrentPlayer(game Game) player.Player {
 func PlayTurn(game Game, position int) Game {
 	player := GetCurrentPlayer(game)
 
-	isStarving := board.WillStravePlayer(player, game.Board, position, game.Score)
+	isStarving := board.WillStarvePlayer(player, game.Board, position, game.Score)
 	if isStarving {
 		_, newBoard := board.DealPosition(game.Board, position)
 		game.Board = newBoard
