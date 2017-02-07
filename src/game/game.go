@@ -3,9 +3,9 @@ package game
 import (
 	"board"
 	"constants"
+	"fmt"
 	"player"
 	"render"
-	"fmt"
 )
 
 const GAME_CONTINUE = -2

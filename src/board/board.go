@@ -2,8 +2,8 @@ package board
 
 import (
 	"constants"
-	"player"
 	"errors"
+	"player"
 )
 
 type Board []int

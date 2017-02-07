@@ -2,9 +2,9 @@ package main
 
 import (
 	"constants"
+	"fmt"
 	"game"
 	"player"
-	"fmt"
 )
 
 func main() {
