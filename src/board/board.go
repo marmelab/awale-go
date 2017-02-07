@@ -28,9 +28,9 @@ func CanPlayerPlayPosition(player player.Player, board Board, position int) bool
 	}
 
 	movePossible := isPlayerCanMove && (board[position] != 0)
-	sumPebble := SumArray(board[player.MinPick:player.MaxPick])
+	starving := IsStarving(board, player)
 
-	if sumPebble == 0 {
+	if starving {
 		var score [2]int
 		isStarving := WillStarvePlayer(player, board, position, score)
 		canFeed := CanFeedPlayer(player, board)
@@ -41,19 +41,22 @@ func CanPlayerPlayPosition(player player.Player, board Board, position int) bool
 }
 
 func DealPosition(board Board, position int) (int, Board) {
-	seeds := board[position]
-	board[position] = 0
+	newBoard := make([]int, len(board))
+	copy(newBoard, board)
+
+	seeds := newBoard[position]
+	newBoard[position] = 0
 	i := position
 
 	for seeds > 0 {
 		i += 1
 		if i%constants.PIT_COUNT != position {
-			board[i%constants.PIT_COUNT] += 1
+			newBoard[i%constants.PIT_COUNT] += 1
 			seeds -= 1
 		}
 	}
 
-	return i % constants.PIT_COUNT, board
+	return i % constants.PIT_COUNT, newBoard
 }
 
 func Pick(player player.Player, board Board, position int, score [2]int) ([2]int, Board) {
@@ -74,9 +77,13 @@ func IsPickPossible(board Board, player player.Player, position int) bool {
 }
 
 func WillStarvePlayer(player player.Player, board Board, position int, score [2]int) bool {
+	//  Fake pick to simulate next turn
 	_, newBoard := Pick(player, board, position, score)
-	starving := (SumArray(newBoard[player.MinPick:player.MaxPick]) == 0)
-	return starving
+	return IsStarving(newBoard, player)
+}
+
+func IsStarving(board Board, player player.Player) {
+	return (SumArray(board[player.MinPick:player.MaxPick]) == 0)
 }
 
 func CanFeedPlayer(player player.Player, board Board) bool {
@@ -90,7 +97,7 @@ func CanFeedPlayer(player player.Player, board Board) bool {
 }
 
 func GetWinner(player player.Player, board Board, score [2]int) int {
-	starving := (SumArray(board[player.MinPick:player.MaxPick]) == 0)
+	starving := IsStarving(board, player)
 	minScore := ((constants.PIT_COUNT * constants.PEBBLE_COUNT) / 2)
 
 	if starving || score[player.Number] > minScore {
