@@ -81,7 +81,7 @@ func WillStarvePlayer(player player.Player, board Board, position int, score [2]
 	return IsStarving(newBoard, player)
 }
 
-func IsStarving(board Board, player player.Player) {
+func IsStarving(board Board, player player.Player) bool {
 	return (SumArray(board[player.MinPick:player.MaxPick]) == 0)
 }
 
