@@ -115,3 +115,32 @@ func TestCanFeedPlayerForNewBoardSouldReturnTrue(t *testing.T) {
 		t.Error("Can feed player should return true")
 	}
 }
+
+func TestCanFeedPlayerForEmptyPlayerTwoBoardSouldReturnTrue(t *testing.T) {
+	board, _ := New(12, 4)
+	playerOne := player.New(0, true, 12)
+
+	for i := 6; i <= 11; i++ {
+		board[i] = 0
+	}
+
+	if !CanFeedPlayer(playerOne, board) {
+		t.Error("Can feed player should return true")
+	}
+}
+
+func TestCanFeedPlayerForRandomPositionSouldReturnFalse(t *testing.T) {
+	board, _ := New(12, 0)
+	playerOne := player.New(0, true, 12)
+
+	board[0] = 5
+	board[1] = 0
+	board[2] = 2
+	board[3] = 0
+	board[4] = 1
+	board[5] = 0
+
+	if CanFeedPlayer(playerOne, board) {
+		t.Error("Can feed player should return false")
+	}
+}

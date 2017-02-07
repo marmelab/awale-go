@@ -30,8 +30,7 @@ func CanPlayerPlayPosition(player player.Player, board Board, position int) bool
 	movePossible := isPlayerCanMove && (board[position] != 0)
 
 	if IsStarving(board, player) {
-		var score [2]int
-		isStarving := WillStarvePlayer(player, board, position, score)
+		isStarving := WillStarvePlayer(player, board, position)
 		canFeed := CanFeedPlayer(player, board)
 		return movePossible && (!isStarving || !canFeed)
 	}
@@ -75,9 +74,9 @@ func IsPickPossible(board Board, player player.Player, position int) bool {
 		2 <= board[position] && board[position] <= 3
 }
 
-func WillStarvePlayer(player player.Player, board Board, position int, score [2]int) bool {
+func WillStarvePlayer(player player.Player, board Board, position int) bool {
 	//  Fake pick to simulate next turn
-	_, newBoard := Pick(player, board, position, score)
+	_, newBoard := Pick(player, board, position, [2]int{0, 0})
 	return IsStarving(newBoard, player)
 }
 
@@ -86,13 +85,13 @@ func IsStarving(board Board, player player.Player) bool {
 }
 
 func CanFeedPlayer(player player.Player, board Board) bool {
-	cannot_feed := false
-	var score [2]int
-	for i := player.MinPosition; i <= player.MaxPosition; i++ {
-		starving := WillStarvePlayer(player, board, i, score)
-		cannot_feed = cannot_feed && starving
+	for i := player.MinPosition; i < player.MaxPosition; i++ {
+		starving := WillStarvePlayer(player, board, i)
+		if !starving {
+			return true
+		}
 	}
-	return !cannot_feed
+	return false
 }
 
 func GetWinner(player player.Player, board Board, score [2]int) int {
