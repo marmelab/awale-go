@@ -103,7 +103,7 @@ func GetWinner(player player.Player, board Board, score [2]int) int {
 		return 1 - player.Number
 	}
 
-	return -2
+	return constants.GAME_CONTINUE
 }
 
 func SumArray(array []int) int {
