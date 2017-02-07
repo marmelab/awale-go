@@ -72,31 +72,28 @@ func TestGetWinnerForContinueGameShouldReturnNoWinner(t *testing.T) {
 
 func TestIsStarvingForEmptySideShouldReturnTrue(t *testing.T) {
 	board, _ := New(12, 4)
-	playerOne := player.New(0, true, 12)
 
 	for i := 6; i <= 11; i++ {
 		board[i] = 0
 	}
 
-	if !IsStarving(board, playerOne) {
+	if !IsStarving(board, 6, 11) {
 		t.Error("Is starving should return starving")
 	}
 }
 
 func TestIsStarvingForNewBoardShouldReturnFalse(t *testing.T) {
 	board, _ := New(12, 4)
-	playerTwo := player.New(1, true, 12)
 
-	if IsStarving(board, playerTwo) {
+	if IsStarving(board, 0, 5) {
 		t.Error("Is starving should return no starving")
 	}
 }
 
 func TestIsStarvingForEmptyBoardShouldReturnTrue(t *testing.T) {
 	board, _ := New(12, 0)
-	playerTwo := player.New(1, true, 12)
 
-	if !IsStarving(board, playerTwo) {
+	if !IsStarving(board, 0, 5) {
 		t.Error("Is starving should return starving")
 	}
 }

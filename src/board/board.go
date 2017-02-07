@@ -29,7 +29,7 @@ func CanPlayerPlayPosition(player player.Player, board Board, position int) bool
 
 	movePossible := isPlayerCanMove && (board[position] != 0)
 
-	if IsStarving(board, player) {
+	if IsStarving(board, player.MinPick, player.MaxPick) {
 		isStarving := WillStarvePlayer(player, board, position)
 		canFeed := CanFeedPlayer(player, board)
 		return movePossible && (!isStarving || !canFeed)
@@ -77,11 +77,11 @@ func IsPickPossible(board Board, player player.Player, position int) bool {
 func WillStarvePlayer(player player.Player, board Board, position int) bool {
 	//  Fake pick to simulate next turn
 	_, newBoard := Pick(player, board, position, [2]int{0, 0})
-	return IsStarving(newBoard, player)
+	return IsStarving(newBoard, player.MinPick, player.MaxPick)
 }
 
-func IsStarving(board Board, player player.Player) bool {
-	return (SumArray(board[player.MinPick:player.MaxPick]) == 0)
+func IsStarving(board Board, minPick int, maxPick int) bool {
+	return (SumArray(board[minPick:maxPick]) == 0)
 }
 
 func CanFeedPlayer(player player.Player, board Board) bool {
@@ -96,8 +96,8 @@ func CanFeedPlayer(player player.Player, board Board) bool {
 
 func GetWinner(player player.Player, board Board, score [2]int) int {
 	minScore := ((constants.PIT_COUNT * constants.PEBBLE_COUNT) / 2)
-
-	if IsStarving(board, player) || score[player.Number] > minScore {
+	starving := IsStarving(board, player.MinPick, player.MaxPick)
+	if starving || score[player.Number] > minScore {
 		return player.Number
 	} else if score[1-player.Number] > minScore {
 		return 1 - player.Number
