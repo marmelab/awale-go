@@ -58,6 +58,6 @@ func TestPlayTurnForNewGameShouldReturnSameResult(t *testing.T) {
 
 	currentGame := PlayTurn(game, 1)
 	if !reflect.DeepEqual(currentGame, expectedGame) {
-		t.Error("New Board doesn't return expected Board")
+		t.Error("New Game doesn't return expected Game")
 	}
 }
