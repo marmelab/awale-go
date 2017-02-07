@@ -38,8 +38,14 @@ func TestConvertPlayerPositionFromPlayerTwo(t *testing.T) {
 }
 
 func TestPlayTurnForNewGameShouldReturnSameResult(t *testing.T) {
-	game := New([]player.Player{player.New(0, true, constants.PIT_COUNT), player.New(1, true, constants.PIT_COUNT)})
-	expectedGame := New([]player.Player{player.New(0, true, constants.PIT_COUNT), player.New(1, true, constants.PIT_COUNT)})
+	game := New([]player.Player{
+		player.New(0, true, constants.PIT_COUNT),
+		player.New(1, true, constants.PIT_COUNT),
+	})
+	expectedGame := New([]player.Player{
+		player.New(0, true, constants.PIT_COUNT),
+		player.New(1, true, constants.PIT_COUNT),
+	})
 	expectedGame.Board = board.Board{4, 0, 5, 5, 5, 5, 4, 4, 4, 4, 4, 4}
 
 	currentGame := PlayTurn(game, 1)
