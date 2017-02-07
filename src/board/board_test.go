@@ -144,3 +144,42 @@ func TestCanFeedPlayerForRandomPositionSouldReturnFalse(t *testing.T) {
 		t.Error("Can feed player should return false")
 	}
 }
+
+func TestDealPositionForNewBoardSouldReturnFour(t *testing.T) {
+	board, _ := New(12, 4)
+	endPosition, newBoard := DealPosition(board, 0)
+
+	if !reflect.DeepEqual(newBoard, Board{0, 5, 5, 5, 5, 4, 4, 4, 4, 4, 4, 4}) {
+		t.Error("New Board doesn't return expected Board")
+	}
+
+	if endPosition != 4 {
+		t.Error("End position sould return 4")
+	}
+}
+
+func TestDealPositionForEmptySideBoardSouldReturnNine(t *testing.T) {
+	board := Board{4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0}
+	endPosition, newBoard := DealPosition(board, 5)
+
+	if !reflect.DeepEqual(newBoard, Board{4, 4, 4, 4, 4, 0, 1, 1, 1, 1, 0, 0}) {
+		t.Error("New Board doesn't return expected Board")
+	}
+
+	if endPosition != 9 {
+		t.Error("End position sould return 9")
+	}
+}
+
+func TestDealPositionFor13PebbleBoardSouldReturnSeven(t *testing.T) {
+	board := Board{4, 4, 4, 4, 14, 4, 0, 0, 0, 0, 0, 0}
+	endPosition, newBoard := DealPosition(board, 4)
+
+	if !reflect.DeepEqual(newBoard, Board{5, 5, 5, 5, 0, 6, 2, 2, 1, 1, 1, 1}) {
+		t.Error("New Board doesn't return expected Board")
+	}
+
+	if endPosition != 7 {
+		t.Error("End position sould return 7")
+	}
+}
