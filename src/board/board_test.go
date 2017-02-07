@@ -28,8 +28,7 @@ func TestNewBoardShouldReturnSizeErrors(t *testing.T) {
 func TestIsPickPossibleShouldReturnTrueForPositionZero(t *testing.T) {
 	board, _ := New(12, 4)
 	board[0] = 2
-	playerTwo := player.New(1, true, 12)
-	if !IsPickPossible(board, playerTwo, 0) {
+	if !IsPickPossible(board, 0, 5, 0) {
 		t.Error("Pick possible should return true for player two")
 	}
 }
@@ -37,8 +36,7 @@ func TestIsPickPossibleShouldReturnTrueForPositionZero(t *testing.T) {
 func TestIsPickPossibleShouldReturnFalseForPositionZero(t *testing.T) {
 	board, _ := New(12, 4)
 	board[0] = 2
-	playerOne := player.New(0, true, 12)
-	if IsPickPossible(board, playerOne, 0) {
+	if IsPickPossible(board, 6, 11, 0) {
 		t.Error("Pick possible should return false for player one")
 	}
 }

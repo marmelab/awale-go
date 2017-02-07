@@ -60,7 +60,7 @@ func DealPosition(board Board, position int) (int, Board) {
 func Pick(player player.Player, board Board, position int, score [2]int) ([2]int, Board) {
 	endPosition, newBoard := DealPosition(board, position)
 
-	for IsPickPossible(newBoard, player, endPosition) {
+	for IsPickPossible(newBoard, player.MinPick, player.MaxPick, endPosition) {
 		score[player.Number] += newBoard[endPosition]
 		newBoard[endPosition] = 0
 		endPosition -= 1
@@ -69,8 +69,8 @@ func Pick(player player.Player, board Board, position int, score [2]int) ([2]int
 	return score, newBoard
 }
 
-func IsPickPossible(board Board, player player.Player, position int) bool {
-	return player.MinPick <= position && position < player.MaxPick &&
+func IsPickPossible(board Board, minPick int, maxPick int, position int) bool {
+	return minPick <= position && position < maxPick &&
 		2 <= board[position] && board[position] <= 3
 }
 
