@@ -202,3 +202,12 @@ func TestPickForPositionWithEmptyPitShouldReturn7Score(t *testing.T) {
 		t.Error("New score doesn't return expected score")
 	}
 }
+
+func TestSumArrayShouldRetun10(t *testing.T) {
+	array := make([]int, 2, 2)
+	array[0] = 5
+	array[1] = 5
+	if SumArray(array) != 10 {
+		t.Error("Sum array doesn't return expected sum 10")
+	}
+}
