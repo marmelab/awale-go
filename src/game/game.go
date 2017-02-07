@@ -77,19 +77,19 @@ func GetPosition(game Game) int {
 
 	fmt.Printf("Player (%d), wich position: ", game.CurrentPlayerIndex+1)
 	fmt.Scanf("%d", &position)
-	position = ConvertPositionPlayer(position, game.CurrentPlayerIndex)
+	position = ConvertPlayerPosition(position, game.CurrentPlayerIndex)
 
 	player := GetCurrentPlayer(game)
 
 	for !board.CanPlayerPlayPosition(player, game.Board, position) {
 		fmt.Printf("Wrong move, play again which position: ")
 		fmt.Scanf("%d", &position)
-		position = ConvertPositionPlayer(position, game.CurrentPlayerIndex)
+		position = ConvertPlayerPosition(position, game.CurrentPlayerIndex)
 	}
 	return position
 }
 
-func ConvertPositionPlayer(position int, indexPlayer int) int {
+func ConvertPlayerPosition(position int, indexPlayer int) int {
 	if indexPlayer == 1 {
 		return constants.PIT_COUNT - position
 	}
