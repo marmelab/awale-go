@@ -107,7 +107,7 @@ func TestIsStarvingForEmptyBoardShouldReturnTrue(t *testing.T) {
 	}
 }
 
-func TestCanFeedPlayerForNewBoardSouldReturnTrue(t *testing.T) {
+func TestCanFeedPlayerForNewBoardShouldReturnTrue(t *testing.T) {
 	board, _ := New(12, 4)
 	playerOne := player.New(0, true, 12)
 
@@ -116,7 +116,7 @@ func TestCanFeedPlayerForNewBoardSouldReturnTrue(t *testing.T) {
 	}
 }
 
-func TestCanFeedPlayerForEmptyPlayerTwoBoardSouldReturnTrue(t *testing.T) {
+func TestCanFeedPlayerForEmptyPlayerTwoBoardShouldReturnTrue(t *testing.T) {
 	board, _ := New(12, 4)
 	playerOne := player.New(0, true, 12)
 
@@ -129,7 +129,7 @@ func TestCanFeedPlayerForEmptyPlayerTwoBoardSouldReturnTrue(t *testing.T) {
 	}
 }
 
-func TestCanFeedPlayerForRandomPositionSouldReturnFalse(t *testing.T) {
+func TestCanFeedPlayerForRandomPositionShouldReturnFalse(t *testing.T) {
 	board, _ := New(12, 0)
 	playerOne := player.New(0, true, 12)
 
@@ -145,7 +145,7 @@ func TestCanFeedPlayerForRandomPositionSouldReturnFalse(t *testing.T) {
 	}
 }
 
-func TestDealPositionForNewBoardSouldReturnFour(t *testing.T) {
+func TestDealPositionForNewBoardShouldReturnFour(t *testing.T) {
 	board, _ := New(12, 4)
 	endPosition, newBoard := DealPosition(board, 0)
 
@@ -154,11 +154,11 @@ func TestDealPositionForNewBoardSouldReturnFour(t *testing.T) {
 	}
 
 	if endPosition != 4 {
-		t.Error("End position sould return 4")
+		t.Error("End position should return 4")
 	}
 }
 
-func TestDealPositionForEmptySideBoardSouldReturnNine(t *testing.T) {
+func TestDealPositionForEmptySideBoardShouldReturnNine(t *testing.T) {
 	board := Board{4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0}
 	endPosition, newBoard := DealPosition(board, 5)
 
@@ -167,11 +167,11 @@ func TestDealPositionForEmptySideBoardSouldReturnNine(t *testing.T) {
 	}
 
 	if endPosition != 9 {
-		t.Error("End position sould return 9")
+		t.Error("End position should return 9")
 	}
 }
 
-func TestDealPositionFor13PebbleBoardSouldReturnSeven(t *testing.T) {
+func TestDealPositionFor13PebbleBoardShouldReturnSeven(t *testing.T) {
 	board := Board{4, 4, 4, 4, 14, 4, 0, 0, 0, 0, 0, 0}
 	endPosition, newBoard := DealPosition(board, 4)
 
@@ -180,7 +180,7 @@ func TestDealPositionFor13PebbleBoardSouldReturnSeven(t *testing.T) {
 	}
 
 	if endPosition != 7 {
-		t.Error("End position sould return 7")
+		t.Error("End position should return 7")
 	}
 }
 
