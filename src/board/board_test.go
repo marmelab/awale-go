@@ -25,7 +25,7 @@ func TestNewBoardShouldReturnSizeErrors(t *testing.T) {
 	}
 }
 
-func TestIsPickPossibleForPostionZeroShouldReturnPickPossible(t *testing.T) {
+func TestIsPickPossibleShouldReturnTrueForPositionZero(t *testing.T) {
 	board, _ := New(12, 4)
 	board[0] = 2
 	playerTwo := player.New(1, true, 12)
@@ -34,7 +34,7 @@ func TestIsPickPossibleForPostionZeroShouldReturnPickPossible(t *testing.T) {
 	}
 }
 
-func TestIsPickPossibleForPostionZeroShouldReturnPickImpossible(t *testing.T) {
+func TestIsPickPossibleShouldReturnFalseForPositionZero(t *testing.T) {
 	board, _ := New(12, 4)
 	board[0] = 2
 	playerOne := player.New(0, true, 12)
@@ -46,20 +46,16 @@ func TestIsPickPossibleForPostionZeroShouldReturnPickImpossible(t *testing.T) {
 func TestGetWinnerForMaxScoreShouldReturnPlayerOne(t *testing.T) {
 	board, _ := New(12, 4)
 	playerOne := player.New(0, true, 12)
-	var score [2]int
-	score[0] = 48
-	score[1] = 0
+	score := [2]int{48, 0}
 	if GetWinner(playerOne, board, score) != 0 {
 		t.Error("Get Winner should return player one")
 	}
 }
 
-func TestGetWinnerForZeroScoreShouldReturnPlayerOne(t *testing.T) {
+func TestGetWinnerForZeroScoreShouldReturnPlayerOneIndex(t *testing.T) {
 	board, _ := New(12, 4)
 	playerTwo := player.New(1, true, 12)
-	var score [2]int
-	score[0] = 48
-	score[1] = 0
+	score := [2]int{48, 0}
 	if GetWinner(playerTwo, board, score) != 0 {
 		t.Error("Get Winner should return player one")
 	}
@@ -68,9 +64,7 @@ func TestGetWinnerForZeroScoreShouldReturnPlayerOne(t *testing.T) {
 func TestGetWinnerForContinueGameShouldReturnNoWinner(t *testing.T) {
 	board, _ := New(12, 4)
 	playerTwo := player.New(1, true, 12)
-	var score [2]int
-	score[0] = 20
-	score[1] = 10
+	score := [2]int{20, 10}
 	if GetWinner(playerTwo, board, score) != -2 {
 		t.Error("Get Winner should return continue game")
 	}
