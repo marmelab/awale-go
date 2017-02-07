@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/signal"
 	"player"
+	"ai"
 	"syscall"
 )
 
@@ -40,6 +41,9 @@ func main() {
 
 		if currentPlayer.HumanPlayer {
 			position = game.GetPosition(currentGame)
+		}
+		else {
+			position = ai.GetPosition(currentGame)
 		}
 
 		currentGame = game.PlayTurn(currentGame, position)
