@@ -1,9 +1,9 @@
 package main
 
 import (
-	"./constants"
-	"./game"
-	"./player"
+	"constants"
+	"game"
+	"player"
 	"fmt"
 )
 

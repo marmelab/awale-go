@@ -9,3 +9,5 @@ CMD ["go-wrapper", "run"]
 ONBUILD COPY . /src
 ONBUILD RUN go-wrapper download
 ONBUILD RUN go-wrapper install
+
+ENV GOPATH /src

@@ -1,7 +1,7 @@
 package render
 
 import (
-	"../board"
+	"board"
 	"fmt"
 )
 

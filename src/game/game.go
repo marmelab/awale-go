@@ -1,10 +1,10 @@
 package game
 
 import (
-	"../board"
-	"../constants"
-	"../player"
-	"../render"
+	"board"
+	"constants"
+	"player"
+	"render"
 	"fmt"
 )
 

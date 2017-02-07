@@ -1,8 +1,8 @@
 package game
 
 import (
-	"../constants"
-	"../player"
+	"constants"
+	"player"
 	"testing"
 )
 

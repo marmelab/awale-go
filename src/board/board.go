@@ -1,8 +1,8 @@
 package board
 
 import (
-	"../constants"
-	"../player"
+	"constants"
+	"player"
 	"errors"
 )
 
