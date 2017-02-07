@@ -183,3 +183,33 @@ func TestDealPositionFor13PebbleBoardSouldReturnSeven(t *testing.T) {
 		t.Error("End position sould return 7")
 	}
 }
+
+func TestPickForNewBoardShouldReturnEmptyScore(t *testing.T) {
+	board, _ := New(12, 4)
+	playerOne := player.New(0, true, 12)
+	score, _ := Pick(playerOne, board, 6, [2]int{0, 0})
+
+	if !reflect.DeepEqual(score, [2]int{0, 0}) {
+		t.Error("New score doesn't return expected score")
+	}
+}
+
+func TestPickForRandomPositionShouldReturn1Score(t *testing.T) {
+	board := Board{4, 4, 4, 4, 14, 4, 0, 0, 0, 0, 0, 0}
+	playerOne := player.New(0, true, 12)
+	score, _ := Pick(playerOne, board, 6, [2]int{0, 0})
+
+	if !reflect.DeepEqual(score, [2]int{0, 0}) {
+		t.Error("New score doesn't return expected score")
+	}
+}
+
+func TestPickForPositionWithEmptyPitShouldReturn7Score(t *testing.T) {
+	board := Board{4, 4, 4, 4, 4, 4, 0, 1, 2, 1, 4, 5}
+	playerOne := player.New(0, true, 12)
+	score, _ := Pick(playerOne, board, 5, [2]int{0, 0})
+
+	if !reflect.DeepEqual(score, [2]int{7, 0}) {
+		t.Error("New score doesn't return expected score")
+	}
+}
