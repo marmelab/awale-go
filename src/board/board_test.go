@@ -105,7 +105,7 @@ func TestCanFeedPlayerForNewBoardShouldReturnTrue(t *testing.T) {
 	}
 }
 
-func TestCanFeedPlayerForEmptyPlayerTwoBoardShouldReturnTrue(t *testing.T) {
+func TestPlayerCanFeedReversePlayerWithAnEmptyBoard(t *testing.T) {
 	board, _ := New(12, 4)
 	playerOne := player.New(0, true, 12)
 
