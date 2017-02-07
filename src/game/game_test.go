@@ -1,8 +1,10 @@
 package game
 
 import (
+	"board"
 	"constants"
 	"player"
+	"reflect"
 	"testing"
 )
 
@@ -46,5 +48,16 @@ func TestConvertPlayerPositionFromPlayerTwoShouldReturn9(t *testing.T) {
 	position := ConvertPlayerPosition(3, 1)
 	if position != 9 {
 		t.Error("Convert player position doesn't return 9")
+	}
+}
+
+func TestPlayTurnForNewGameShouldReturnSameResult(t *testing.T) {
+	game := New([]player.Player{player.New(0, true, constants.PIT_COUNT), player.New(1, true, constants.PIT_COUNT)})
+	expectedGame := New([]player.Player{player.New(0, true, constants.PIT_COUNT), player.New(1, true, constants.PIT_COUNT)})
+	expectedGame.Board = board.Board{4, 0, 5, 5, 5, 5, 4, 4, 4, 4, 4, 4}
+
+	currentGame := PlayTurn(game, 1)
+	if !reflect.DeepEqual(currentGame, expectedGame) {
+		t.Error("New Board doesn't return expected Board")
 	}
 }
