@@ -118,7 +118,7 @@ func TestCanFeedPlayerForEmptyPlayerTwoBoardShouldReturnTrue(t *testing.T) {
 	}
 }
 
-func TestCanFeedPlayerForRandomPositionShouldReturnFalse(t *testing.T) {
+func TestCanFeedPlayerForEmptySidePositionShouldReturnFalse(t *testing.T) {
 	board, _ := New(12, 0)
 	playerOne := player.New(0, true, 12)
 
@@ -183,7 +183,7 @@ func TestPickForNewBoardShouldReturnEmptyScore(t *testing.T) {
 	}
 }
 
-func TestPickForRandomPositionShouldReturn1Score(t *testing.T) {
+func TestPickForEmptySideShouldReturnEmptyScore(t *testing.T) {
 	board := Board{4, 4, 4, 4, 14, 4, 0, 0, 0, 0, 0, 0}
 	playerOne := player.New(0, true, 12)
 	score, _ := Pick(playerOne, board, 6, [2]int{0, 0})
