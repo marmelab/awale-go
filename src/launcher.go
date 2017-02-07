@@ -26,8 +26,8 @@ func main() {
 
 	fmt.Println("\n############# GAME STARTED #############")
 
-	playerOne := player.New(0, true, constants.PIT_COUNT)
-	playerTwo := player.New(1, true, constants.PIT_COUNT)
+	playerOne := askForPlayer("\n Player 1 \n", 0)
+	playerTwo := askForPlayer("\n Player 2 \n", 1)
 
 	currentGame := game.New([]player.Player{playerOne, playerTwo})
 	var position int
@@ -51,6 +51,20 @@ func main() {
 	}
 
 	fmt.Println(RenderGameState(currentGame))
+}
+
+func askForPlayer(header string, indexPlayer int) player.Player {
+
+	var isHuman string
+
+	fmt.Println(header)
+	fmt.Print("Are you an human ? (y/n): ")
+	fmt.Scanf("%s", &isHuman)
+
+	if isHuman == "y" || isHuman == "" {
+		return player.New(indexPlayer, true, constants.PIT_COUNT)
+	}
+	return player.New(indexPlayer, false, constants.PIT_COUNT)
 }
 
 func RenderGameState(game game.Game) string {
