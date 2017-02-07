@@ -203,6 +203,22 @@ func TestPickForPositionWithEmptyPitShouldReturn7Score(t *testing.T) {
 	}
 }
 
+func TestCanPlayerPlayPositionForNewBoardReturnTrue(t *testing.T) {
+	board, _ := New(12, 4)
+	playerOne := player.New(0, true, 12)
+	if !CanPlayerPlayPosition(playerOne, board, 0) {
+		t.Error("Can player play position doesn't return true")
+	}
+}
+
+func TestCanPlayerPlayPositionForWrongPositionReturnFalse(t *testing.T) {
+	board, _ := New(12, 4)
+	playerOne := player.New(0, true, 12)
+	if CanPlayerPlayPosition(playerOne, board, 99) {
+		t.Error("Can player play position doesn't return false")
+	}
+}
+
 func TestSumArrayShouldRetun10(t *testing.T) {
 	array := make([]int, 2, 2)
 	array[0] = 5
