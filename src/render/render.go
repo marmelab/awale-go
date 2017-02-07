@@ -16,7 +16,7 @@ func Render(board board.Board, playerNumber int) string {
 	}
 	render += "\n\n"
 
-	render += IndicatorCurrentPlayer(playerNumber, 1)
+	render += CurrentPlayerIndicator(playerNumber, 1)
 	render += " Player 2    "
 	for i := size - 1; i >= halfSize; i-- {
 		render += fmt.Sprintf("%2d    ", board[i])
@@ -24,7 +24,7 @@ func Render(board board.Board, playerNumber int) string {
 
 	render += "\n"
 
-	render += IndicatorCurrentPlayer(playerNumber, 0)
+	render += CurrentPlayerIndicator(playerNumber, 0)
 	render += " Player 1    "
 	for _, row := range board[0:halfSize] {
 		render += fmt.Sprintf("%2d    ", row)
@@ -35,7 +35,7 @@ func Render(board board.Board, playerNumber int) string {
 	return render
 }
 
-func IndicatorCurrentPlayer(playerNumber int, number int) string {
+func CurrentPlayerIndicator(playerNumber int, number int) string {
 	if playerNumber == number {
 		return "  =>  "
 	}

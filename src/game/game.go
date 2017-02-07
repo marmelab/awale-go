@@ -8,8 +8,6 @@ import (
 	"render"
 )
 
-const GAME_CONTINUE = -2
-
 type Game struct {
 	Board              board.Board
 	Players            []player.Player
@@ -26,7 +24,7 @@ func New(players []player.Player) Game {
 		players,
 		score,
 		0,
-		GAME_CONTINUE,
+		constants.GAME_CONTINUE,
 	}
 }
 
@@ -39,11 +37,11 @@ func RenderScore(game Game) string {
 }
 
 func IsFinished(game Game) bool {
-	return game.GameState != GAME_CONTINUE
+	return game.GameState != constants.GAME_CONTINUE
 }
 
 func CheckWinner(game Game) Game {
-	if game.GameState != GAME_CONTINUE {
+	if game.GameState != constants.GAME_CONTINUE {
 		return game
 	}
 
@@ -59,7 +57,7 @@ func GetCurrentPlayer(game Game) player.Player {
 func PlayTurn(game Game, position int) Game {
 	player := GetCurrentPlayer(game)
 
-	isStarving := board.WillStarvePlayer(player, game.Board, position, game.Score)
+	isStarving := board.WillStarvePlayer(player, game.Board, position)
 	if isStarving {
 		_, newBoard := board.DealPosition(game.Board, position)
 		game.Board = newBoard
