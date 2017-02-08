@@ -104,12 +104,13 @@ func Score(node Node) int {
 	opponentCountPebble := scoring.GetCountPitWithOneTwoPebble(node.Board, node.Players[1-node.IndexCurrentPlayer])
 	playerWithFullOfPebble := scoring.IsPitWhithMoreTwelvePebbble(node.Board, node.Players[node.IndexCurrentPlayer])
 
-	totalScore := (0.5 * float64(opponentCountPebble)) + (0.2 * float64(playerWithFullOfPebble)) - (0.5 * float64(playerCountPebble)) - (0.2 * float64(opponentWithFullOfPebble))
+	scoreGoodForPlayer := (0.5 * float64(opponentCountPebble)) + (0.2 * float64(playerWithFullOfPebble))
+	scoreBadForPlayer := -(0.5 * float64(playerCountPebble)) - (0.2 * float64(opponentWithFullOfPebble))
+	totalScore := scoreGoodForPlayer + scoreBadForPlayer
 
 	if node.IsOpponent {
 		return -int(totalScore)
 	}
-
 	return int(totalScore)
 }
 
