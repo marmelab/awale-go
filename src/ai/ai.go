@@ -5,6 +5,7 @@ import (
 	"board"
 	"game"
 	"player"
+	"runtime"
 	"time"
 )
 
@@ -62,6 +63,8 @@ func GetBestPosition(currentBoard board.Board, players []player.Player, indexCur
 	for _, position := range legalPositionChanges {
 		go RecursiveNodeVisitor(Node{currentBoard, position, position, false, players, indexCurrentPlayer, 1}, nodes)
 	}
+
+	print(runtime.NumGoroutine(), "\n")
 
 	return CaptureBestPositionChange(scores, timeout)
 }
