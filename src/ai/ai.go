@@ -10,11 +10,11 @@ func GetPosition(currentGame game.Game) (int) {
 
     depth := 6
 
-    _, bestPosition := MinMax(currentGame, depth)
+    _, bestPosition := GetBestPosition(currentGame, depth)
     return bestPosition
 }
 
-func MinMax(currentGame game.Game, depth int) (int, int) {
+func GetBestPosition(currentGame game.Game, depth int) (int, int) {
 
     player := game.GetCurrentPlayer(currentGame)
 
@@ -32,7 +32,7 @@ func MinMax(currentGame game.Game, depth int) (int, int) {
         bestScore = -999
         for position := player.MinPosition; position < player.MaxPosition; position++ {
             if board.CanPlayerPlayPosition(player, currentGame.Board, position) {
-               score :=  MinMax(game, depth - 1)
+               score :=  GetBestPosition(game, depth - 1)
                if score > bestScore {
                    bestScore = score
                    bestPosition = position
@@ -44,14 +44,14 @@ func MinMax(currentGame game.Game, depth int) (int, int) {
         bestScore = 999
         for position := player.MinPosition; position < player.MaxPosition; position++ {
             if board.CanPlayerPlayPosition(player, currentGame.Board, position) {
-                score :=  MinMax(game, depth - 1)
+                score :=  GetBestPosition(game, depth - 1)
                 if score < bestScore {
                     bestScore = score
                     bestPosition = position
                 }
             }
         }
-    }    
+    }
 
     return bestScore, bestPosition
 }
