@@ -8,7 +8,7 @@ import (
 )
 
 const AI_REFLECTION_TIME time.Duration = time.Millisecond * 1500
-const SCORING_WORKER_COUNT int = 6
+const SCORING_WORKER_COUNT int = 4
 
 type Node struct {
 	Board              board.Board
@@ -95,7 +95,7 @@ func ScoringWorker(nodes <-chan Node, scores chan<- Scoring) {
 
 func Score(node Node) int {
 
-	//availablePositionChanges := board.GetLegalPositionChangesForPlayer(node.Player, node.Board)
+	//todo defined rules scoring
 
 	zoningScore := 1
 	supremacyScore := 1
