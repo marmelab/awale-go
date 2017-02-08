@@ -45,7 +45,7 @@ func GetBestPosition(currentBoard board.Board, players []player.Player, indexCur
 
 	player := players[indexCurrentPlayer]
 	legalPositionChanges := GetLegalPositionChangesForPlayer(player, currentBoard)
-	print(legalPositionChanges)
+
 	if len(legalPositionChanges) == 0 {
 		return -1 // todo return error
 	}
@@ -138,7 +138,7 @@ func NodeVisitor(node Node) []Node {
 }
 
 func GetLegalPositionChangesForPlayer(player player.Player, currentBoard board.Board) []int {
-	legalPositionChanges := make([]int, (player.MaxPosition - player.MinPosition))
+	var legalPositionChanges []int
 	for position := player.MinPosition; position < player.MaxPosition; position++ {
 		if board.CanPlayerPlayPosition(player, currentBoard, position) {
 			legalPositionChanges = append(legalPositionChanges, position)
