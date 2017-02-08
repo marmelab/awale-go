@@ -1,13 +1,13 @@
 package main
 
 import (
+	"ai"
 	"constants"
 	"fmt"
 	"game"
 	"os"
 	"os/signal"
 	"player"
-	"ai"
 	"syscall"
 )
 
@@ -41,9 +41,9 @@ func main() {
 
 		if currentPlayer.HumanPlayer {
 			position = game.GetPosition(currentGame)
-		}
-		else {
+		} else {
 			position = ai.GetPosition(currentGame)
+			fmt.Println("Player (2), position: ", game.ConvertBoardPosition(position, currentGame.CurrentPlayerIndex))
 		}
 
 		currentGame = game.PlayTurn(currentGame, position)
