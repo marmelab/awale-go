@@ -1,6 +1,7 @@
 package ai
 
 import (
+	"ai/scoring"
 	"board"
 	"game"
 	"player"
@@ -95,18 +96,21 @@ func ScoringWorker(nodes <-chan Node, scores chan<- Scoring) {
 
 func Score(node Node) int {
 
-	//todo defined rules scoring
+	// Bad for player
+	playerCountPebble := scoring.GetCountPitWithOneTwoPebble(node.Board, node.Players[node.IndexCurrentPlayer])
+	opponentWithFullOfPebble := scoring.IsPitWhithMoreTwelvePebbble(node.Board, node.Players[1-node.IndexCurrentPlayer])
 
-	zoningScore := 1
-	supremacyScore := 1
+	// Good for player
+	opponentCountPebble := scoring.GetCountPitWithOneTwoPebble(node.Board, node.Players[1-node.IndexCurrentPlayer])
+	playerWithFullOfPebble := scoring.IsPitWhithMoreTwelvePebbble(node.Board, node.Players[node.IndexCurrentPlayer])
 
-	totalScore := zoningScore + supremacyScore
+	totalScore := (0.5 * float64(opponentCountPebble)) + (0.2 * float64(playerWithFullOfPebble)) - (0.5 * float64(playerCountPebble)) - (0.2 * float64(opponentWithFullOfPebble))
 
 	if node.IsOpponent {
-		return -totalScore
+		return -int(totalScore)
 	}
 
-	return totalScore
+	return int(totalScore)
 }
 
 func RecursiveNodeVisitor(rootNode Node, out chan Node) {
