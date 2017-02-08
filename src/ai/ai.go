@@ -10,7 +10,7 @@ import (
 )
 
 const AI_REFLECTION_TIME time.Duration = time.Millisecond * 1500
-const SCORING_WORKER_COUNT int = 4
+const SCORING_WORKER_COUNT int = 2
 
 type Node struct {
 	Board              board.Board
@@ -45,7 +45,7 @@ func GetBestPosition(currentBoard board.Board, players []player.Player, indexCur
 
 	player := players[indexCurrentPlayer]
 	legalPositionChanges := GetLegalPositionChangesForPlayer(player, currentBoard)
-
+	print(legalPositionChanges)
 	if len(legalPositionChanges) == 0 {
 		return -1 // todo return error
 	}
@@ -79,9 +79,10 @@ func CaptureBestPositionChange(scores chan Scoring, stopProcess chan bool) int {
 		select {
 		case finished = <-stopProcess:
 		case scoring := <-scores:
-			if scoring.Score > maxScore {
+			if scoring.Score > maxScore && bestPositionChange != scoring.ScoreNode.RootPositionChange {
 				maxScore = scoring.Score
 				bestPositionChange = scoring.ScoreNode.RootPositionChange
+				print("pos ", bestPositionChange, " score ", maxScore, " index ", scoring.ScoreNode.IndexCurrentPlayer, "\n")
 			}
 		}
 	}

@@ -43,7 +43,7 @@ func main() {
 			position = game.GetPosition(currentGame)
 		} else {
 			position = ai.GetPosition(currentGame)
-			fmt.Println("Player (2), position: ", position, game.ConvertBoardPosition(position, currentGame.CurrentPlayerIndex))
+			fmt.Println("Player (2), position: ", position)
 		}
 
 		currentGame = game.PlayTurn(currentGame, position)
