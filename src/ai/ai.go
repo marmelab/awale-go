@@ -124,19 +124,19 @@ func RecursiveNodeVisitor(rootNode Node, out chan Node) {
 
 func NodeVisitor(node Node) []Node {
 	player := node.Players[node.IndexCurrentPlayer]
-	out := []Node{}
+	nodeChild := []Node{}
 
 	if node.Depth == 0 {
-		return out
+		return nodeChild
 	}
 
 	legalPositionChanges := GetLegalPositionChangesForPlayer(player, node.Board)
 	for _, positionChange := range legalPositionChanges {
 		_, nodeBoard := board.DealPosition(node.Board, positionChange)
-		out = append(out, Node{nodeBoard, positionChange, node.RootPositionChange, !node.IsOpponent, node.Players, 1 - node.IndexCurrentPlayer, node.Depth - 1})
+		nodeChild = append(nodeChild, Node{nodeBoard, positionChange, node.RootPositionChange, !node.IsOpponent, node.Players, 1 - node.IndexCurrentPlayer, node.Depth - 1})
 	}
 
-	return out
+	return nodeChild
 }
 
 func GetLegalPositionChangesForPlayer(player player.Player, currentBoard board.Board) []int {
