@@ -4,7 +4,6 @@ import (
 	"board"
 	"game"
 	"player"
-	"runtime"
 	"time"
 )
 
@@ -64,8 +63,6 @@ func GetBestPosition(currentBoard board.Board, players []player.Player, indexCur
 		go RecursiveNodeVisitor(Node{currentBoard, position, position, false, players, indexCurrentPlayer, DEPTH_RECURSIVITY}, nodes)
 	}
 
-	print("goroutine ", runtime.NumGoroutine(), "\n")
-
 	return CaptureBestPositionChange(scores, timeout)
 }
 
@@ -82,7 +79,6 @@ func CaptureBestPositionChange(scores chan Scoring, stopProcess chan bool) int {
 			if scoring.Score > maxScore && bestPositionChange != scoring.ScoreNode.RootPositionChange {
 				maxScore = scoring.Score
 				bestPositionChange = scoring.ScoreNode.RootPositionChange
-				print("pos ", bestPositionChange, " score ", maxScore, " index ", scoring.ScoreNode.IndexCurrentPlayer, "\n")
 			}
 		}
 	}
