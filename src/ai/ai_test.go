@@ -5,37 +5,31 @@ import (
 	"constants"
 	"player"
 	"testing"
-	"time"
+	"reflect"
 )
 
-func TestRandomBoard(t *testing.T) {
+func TestLegalPositionChangesForPlayer1ShouldReturn05(t *testing.T) {
 
-	board := board.Board{0, 1, 8, 0, 7, 1, 3, 8, 8, 7, 2, 1}
-	players := []player.Player{
-		player.New(0, true, constants.PIT_COUNT),
-		player.New(1, false, constants.PIT_COUNT),
-	}
-	AI_REFLECTION_TIME := time.Millisecond * 1500
+	board, _ := board.New(constants.PIT_COUNT, constants.PEBBLE_COUNT)
+	playerOne := player.New(0, true, constants.PIT_COUNT)
 
-	position, _ := GetBestPosition(board, players, 1, AI_REFLECTION_TIME)
+	position := GetLegalPositionChangesForPlayer(playerOne, board)
+	expectedPosition := []int {0, 1, 2, 3, 4, 5}
 
-	if position == 0 {
-		t.Error("New position doesn't return 0")
+	if !reflect.DeepEqual(position, expectedPosition) {
+		t.Error("New position doesn't expected position")
 	}
 }
 
-func TestRandom1Board(t *testing.T) {
+func TestLegalPositionChangesForPlayer2ShouldReturn611(t *testing.T) {
 
-	board := board.Board{1, 1, 9, 0, 1, 8, 7, 7, 7, 1, 0, 1}
-	players := []player.Player{
-		player.New(0, true, constants.PIT_COUNT),
-		player.New(1, false, constants.PIT_COUNT),
-	}
-	AI_REFLECTION_TIME := time.Millisecond * 1500
+	board, _ := board.New(constants.PIT_COUNT, constants.PEBBLE_COUNT)
+	playerOne := player.New(1, true, constants.PIT_COUNT)
 
-	position, _ := GetBestPosition(board, players, 1, AI_REFLECTION_TIME)
+	position := GetLegalPositionChangesForPlayer(playerOne, board)
+	expectedPosition := []int {6, 7, 8, 9, 10, 11}
 
-	if position == 0 {
-		t.Error("New position doesn't return 0")
+	if !reflect.DeepEqual(position, expectedPosition) {
+		t.Error("New position doesn't expected position")
 	}
 }
