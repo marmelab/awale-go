@@ -106,6 +106,25 @@ func GetWinner(player player.Player, board Board, score [2]int) int {
 	return constants.GAME_CONTINUE
 }
 
+func GetCountPitWithOneTwoPebble(board Board, player player.Player) int {
+	countPeeeble := 0
+	for position := player.MinPosition; position < player.MaxPosition; position++ {
+		if (board[position] == 1) || (board[position] == 2) {
+			countPeeeble += board[position]
+		}
+	}
+	return countPeeeble
+}
+
+func IsAPitWithMoreThanTwelvePebble(board Board, player player.Player) int {
+	for position := player.MinPosition; position < player.MaxPosition; position++ {
+		if board[position] >= 12 {
+			return 1
+		}
+	}
+	return 0
+}
+
 func SumArray(array []int) int {
 	total := 0
 	for _, value := range array {
