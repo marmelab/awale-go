@@ -235,18 +235,18 @@ func TestCountPitWithOneTwoPebbleForAllBoardWithOnePebbleShoulReturn6(t *testing
 	}
 }
 
-func TestIsPitWithMoreTwelvePebbbleForNewBoardShoulReturnFalse(t *testing.T) {
+func TestIsPitWithMoreTwelvePebbleForNewBoardShoulReturnFalse(t *testing.T) {
 	board, _ := New(12, 4)
 	playerOne := player.New(0, true, 12)
-	if IsPitWithMoreTwelvePebbble(board, playerOne) != 0 {
+	if IsPitWithMoreTwelvePebble(board, playerOne) != 0 {
 		t.Error("Pit with more twelve pebble doesn't return False")
 	}
 }
 
-func TestIsPitWithMoreTwelvePebbbleForNewBoardShoulReturnTrue(t *testing.T) {
+func TestIsPitWithMoreTwelvePebbleForNewBoardShoulReturnTrue(t *testing.T) {
 	board := Board{1, 1, 0, 13, 1, 1, 1, 1, 1, 1, 1, 1}
 	playerOne := player.New(0, true, 12)
-	if IsPitWithMoreTwelvePebbble(board, playerOne) != 1 {
+	if IsPitWithMoreTwelvePebble(board, playerOne) != 1 {
 		t.Error("Pit with more twelve pebble doesn't return True")
 	}
 }
