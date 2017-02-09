@@ -116,7 +116,7 @@ func GetCountPitWithOneTwoPebble(board Board, player player.Player) int {
 	return countPeeeble
 }
 
-func IsPitWithMoreTwelvePebble(board Board, player player.Player) int {
+func IsAPitWithMoreThanTwelvePebble(board Board, player player.Player) int {
 	for position := player.MinPosition; position < player.MaxPosition; position++ {
 		if board[position] >= 12 {
 			return 1
