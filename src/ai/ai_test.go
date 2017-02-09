@@ -17,7 +17,7 @@ func TestRandomBoard(t *testing.T) {
 	}
 	AI_REFLECTION_TIME := time.Millisecond * 1500
 
-	position := GetBestPosition(board, players, 1, AI_REFLECTION_TIME)
+	position, _ := GetBestPosition(board, players, 1, AI_REFLECTION_TIME)
 
 	if position == 0 {
 		t.Error("New position doesn't return 0")
@@ -33,7 +33,7 @@ func TestRandom1Board(t *testing.T) {
 	}
 	AI_REFLECTION_TIME := time.Millisecond * 1500
 
-	position := GetBestPosition(board, players, 1, AI_REFLECTION_TIME)
+	position, _ := GetBestPosition(board, players, 1, AI_REFLECTION_TIME)
 
 	if position == 0 {
 		t.Error("New position doesn't return 0")

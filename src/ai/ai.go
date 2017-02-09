@@ -2,6 +2,7 @@ package ai
 
 import (
 	"board"
+	"errors"
 	"game"
 	"player"
 	"time"
@@ -27,11 +28,11 @@ type Scoring struct {
 	Score       int
 }
 
-func GetPosition(currentGame game.Game) int {
+func GetPosition(currentGame game.Game) (int, error) {
 	return GetBestPosition(currentGame.Board, currentGame.Players, currentGame.CurrentPlayerIndex, AI_REFLECTION_TIME)
 }
 
-func GetBestPosition(currentBoard board.Board, players []player.Player, indexCurrentPlayer int, duration time.Duration) int {
+func GetBestPosition(currentBoard board.Board, players []player.Player, indexCurrentPlayer int, duration time.Duration) (int, error) {
 
 	nodes := make(chan Node, 100)
 	scores := make(chan Scoring)
@@ -46,11 +47,11 @@ func GetBestPosition(currentBoard board.Board, players []player.Player, indexCur
 	legalPositionChanges := GetLegalPositionChangesForPlayer(player, currentBoard)
 
 	if len(legalPositionChanges) == 0 {
-		return -1 // todo return error
+		return -1, errors.New("There's no legal position for this player.")
 	}
 
 	if len(legalPositionChanges) == 1 {
-		return legalPositionChanges[0]
+		return legalPositionChanges[0], nil
 	}
 
 	// Start scoring workers
@@ -63,7 +64,7 @@ func GetBestPosition(currentBoard board.Board, players []player.Player, indexCur
 		go RecursiveNodeVisitor(Node{currentBoard, position, position, false, players, indexCurrentPlayer, DEPTH_RECURSIVITY}, nodes)
 	}
 
-	return CaptureBestPositionChange(scores, timeout)
+	return CaptureBestPositionChange(scores, timeout), nil
 }
 
 func CaptureBestPositionChange(scores chan Scoring, stopProcess chan bool) int {

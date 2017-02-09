@@ -32,6 +32,7 @@ func main() {
 
 	currentGame := game.New([]player.Player{playerOne, playerTwo})
 	var position int
+	var positionError error
 
 	fmt.Println(game.Render(currentGame))
 
@@ -42,7 +43,10 @@ func main() {
 		if currentPlayer.HumanPlayer {
 			position = game.GetPosition(currentGame)
 		} else {
-			position = ai.GetPosition(currentGame)
+			position, positionError = ai.GetPosition(currentGame)
+			if positionError != nil {
+				break
+			}
 			fmt.Println("Player (2), position: ", game.ConvertPositionToBoardPosition(position, currentGame.CurrentPlayerIndex))
 		}
 
@@ -54,7 +58,11 @@ func main() {
 		fmt.Println(game.RenderScore(currentGame))
 	}
 
-	fmt.Println(RenderGameState(currentGame))
+	if positionError == nil {
+		fmt.Println(RenderGameState(currentGame))
+	} else {
+		fmt.Println(positionError)
+	}
 }
 
 func askForPlayer(header string, indexPlayer int) player.Player {
