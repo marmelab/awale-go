@@ -6,9 +6,10 @@ import (
 	"game"
 	"player"
 	"time"
+	"runtime"
 )
 
-const AI_REFLECTION_TIME time.Duration = time.Millisecond * 100
+const AI_REFLECTION_TIME time.Duration = time.Millisecond * 250
 const SCORING_WORKER_COUNT int = 4
 
 type Node struct {
@@ -61,7 +62,7 @@ func GetBestPosition(currentBoard board.Board, players []player.Player, indexCur
 	for _, position := range legalPositionChanges {
 		go RecursiveNodeVisitor(Node{currentBoard, position, position, false, players, indexCurrentPlayer}, nodes)
 	}
-
+	print("goroutine ", runtime.NumGoroutine(), "\n")
 	return CaptureBestPositionChange(scores, timeout), nil
 }
 
