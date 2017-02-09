@@ -1,7 +1,6 @@
 package ai
 
 import (
-	"ai/scoring"
 	"board"
 	"game"
 	"player"
@@ -102,12 +101,12 @@ func ScoringWorker(nodes <-chan Node, scores chan<- Scoring) {
 func Score(node Node) int {
 
 	// Bad for player
-	playerCountPebble := scoring.GetCountPitWithOneTwoPebble(node.Board, node.Players[node.IndexCurrentPlayer])
-	opponentWithFullOfPebble := scoring.IsPitWhithMoreTwelvePebbble(node.Board, node.Players[1-node.IndexCurrentPlayer])
+	playerCountPebble := board.GetCountPitWithOneTwoPebble(node.Board, node.Players[node.IndexCurrentPlayer])
+	opponentWithFullOfPebble := board.IsPitWhithMoreTwelvePebbble(node.Board, node.Players[1-node.IndexCurrentPlayer])
 
 	// Good for player
-	opponentCountPebble := scoring.GetCountPitWithOneTwoPebble(node.Board, node.Players[1-node.IndexCurrentPlayer])
-	playerWithFullOfPebble := scoring.IsPitWhithMoreTwelvePebbble(node.Board, node.Players[node.IndexCurrentPlayer])
+	opponentCountPebble := board.GetCountPitWithOneTwoPebble(node.Board, node.Players[1-node.IndexCurrentPlayer])
+	playerWithFullOfPebble := board.IsPitWhithMoreTwelvePebbble(node.Board, node.Players[node.IndexCurrentPlayer])
 
 	scoreGoodForPlayer := (0.5 * float64(opponentCountPebble)) + (0.2 * float64(playerWithFullOfPebble))
 	scoreBadForPlayer := -(0.5 * float64(playerCountPebble)) - (0.2 * float64(opponentWithFullOfPebble))

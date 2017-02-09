@@ -219,6 +219,38 @@ func TestCanPlayerPlayPositionForWrongPositionReturnFalse(t *testing.T) {
 	}
 }
 
+func TestCountPitWithOneTwoPebbleForNewBoardShoulReturn0(t *testing.T) {
+	board, _ := New(12, 4)
+	playerOne := player.New(0, true, 12)
+	if GetCountPitWithOneTwoPebble(board, playerOne) != 0 {
+		t.Error("Count Pebble doesn't return 0")
+	}
+}
+
+func TestCountPitWithOneTwoPebbleForAllBoardWithOnePebbleShoulReturn6(t *testing.T) {
+	board := Board{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+	playerOne := player.New(0, true, 12)
+	if GetCountPitWithOneTwoPebble(board, playerOne) != 6 {
+		t.Error("Count Pebble doesn't return 6")
+	}
+}
+
+func TestIsPitWhithMoreTwelvePebbbleForNewBoardShoulReturnFalse(t *testing.T) {
+	board, _ := New(12, 4)
+	playerOne := player.New(0, true, 12)
+	if IsPitWhithMoreTwelvePebbble(board, playerOne) != 0 {
+		t.Error("Pit with more twelve pebble doesn't return False")
+	}
+}
+
+func TestIsPitWhithMoreTwelvePebbbleForNewBoardShoulReturnTrue(t *testing.T) {
+	board := Board{1, 1, 0, 13, 1, 1, 1, 1, 1, 1, 1, 1}
+	playerOne := player.New(0, true, 12)
+	if IsPitWhithMoreTwelvePebbble(board, playerOne) != 1 {
+		t.Error("Pit with more twelve pebble doesn't return True")
+	}
+}
+
 func TestSumArrayShouldRetun10(t *testing.T) {
 	array := make([]int, 2, 2)
 	array[0] = 5
