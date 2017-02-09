@@ -37,18 +37,18 @@ func TestConvertPlayerPositionFromPlayerTwo(t *testing.T) {
 	}
 }
 
-func TestConvertBoardPositionFromPlayerOne(t *testing.T) {
+func TestConvertIAPositionToBoardPositionFromPlayerOne(t *testing.T) {
 	for i := 0; i <= 5; i++ {
-		position := ConvertBoardPosition(i, 0)
+		position := ConvertIAPositionToBoardPosition(i, 0)
 		if position != (i + 1) {
 			t.Error("Convert baord position doesn't return", position)
 		}
 	}
 }
 
-func TestConvertBoardPositionFromPlayerTwo(t *testing.T) {
+func TestConvertIAPositionToBoardPositionFromPlayerTwo(t *testing.T) {
 	for i := 6; i <= 11; i++ {
-		position := ConvertBoardPosition(i, 1)
+		position := ConvertIAPositionToBoardPosition(i, 1)
 		if position != (constants.PIT_COUNT - i) {
 			t.Error("Convert baord position doesn't return", position)
 		}

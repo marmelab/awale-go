@@ -10,7 +10,8 @@ import (
 )
 
 const AI_REFLECTION_TIME time.Duration = time.Millisecond * 1500
-const SCORING_WORKER_COUNT int = 2
+const SCORING_WORKER_COUNT int = 4
+const DEPTH_RECURSIVITY int = 4
 
 type Node struct {
 	Board              board.Board
@@ -61,10 +62,10 @@ func GetBestPosition(currentBoard board.Board, players []player.Player, indexCur
 
 	// Start board graph visitors
 	for _, position := range legalPositionChanges {
-		go RecursiveNodeVisitor(Node{currentBoard, position, position, false, players, indexCurrentPlayer, 1}, nodes)
+		go RecursiveNodeVisitor(Node{currentBoard, position, position, false, players, indexCurrentPlayer, DEPTH_RECURSIVITY}, nodes)
 	}
 
-	print(runtime.NumGoroutine(), "\n")
+	print("goroutine ", runtime.NumGoroutine(), "\n")
 
 	return CaptureBestPositionChange(scores, timeout)
 }
@@ -129,11 +130,16 @@ func NodeVisitor(node Node) []Node {
 	player := node.Players[node.IndexCurrentPlayer]
 	out := []Node{}
 
+	if node.Depth == 0 {
+		return out
+	}
+
 	legalPositionChanges := GetLegalPositionChangesForPlayer(player, node.Board)
 	for _, positionChange := range legalPositionChanges {
 		_, nodeBoard := board.DealPosition(node.Board, positionChange)
-		out = append(out, Node{nodeBoard, positionChange, node.RootPositionChange, !node.IsOpponent, node.Players, 1 - node.IndexCurrentPlayer, node.Depth + 1})
+		out = append(out, Node{nodeBoard, positionChange, node.RootPositionChange, !node.IsOpponent, node.Players, 1 - node.IndexCurrentPlayer, node.Depth - 1})
 	}
+
 	return out
 }
 

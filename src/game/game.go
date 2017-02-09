@@ -94,7 +94,7 @@ func ConvertPlayerPosition(position int, indexPlayer int) int {
 	return position - 1
 }
 
-func ConvertBoardPosition(position int, indexPlayer int) int {
+func ConvertIAPositionToBoardPosition(position int, indexPlayer int) int {
 	if indexPlayer == 1 {
 		return constants.PIT_COUNT - position
 	}
