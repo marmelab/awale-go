@@ -9,7 +9,7 @@ import (
 )
 
 const AI_REFLECTION_TIME time.Duration = time.Millisecond * 250
-const SCORING_WORKER_COUNT int = 4
+const SCORING_WORKER_COUNT int = 10
 
 type Node struct {
 	Board              board.Board
