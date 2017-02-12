@@ -60,13 +60,16 @@ func DealPosition(board Board, position int) (int, Board) {
 func Pick(player player.Player, board Board, position int, score [2]int) ([2]int, Board) {
 	endPosition, newBoard := DealPosition(board, position)
 
+	var newScore [2]int
+	copy(newScore[:], score[:])
+
 	for IsPickPossible(newBoard, player.MinPick, player.MaxPick, endPosition) {
-		score[player.Number] += newBoard[endPosition]
+		newScore[player.Number] += newBoard[endPosition]
 		newBoard[endPosition] = 0
 		endPosition -= 1
 	}
 
-	return score, newBoard
+	return newScore, newBoard
 }
 
 func IsPickPossible(board Board, minPick int, maxPick int, position int) bool {
@@ -131,4 +134,8 @@ func SumArray(array []int) int {
 		total += value
 	}
 	return total
+}
+
+func InitBoardTest(b [12]int) Board {
+	return Board{b[6], b[7], b[8], b[9], b[10], b[11], b[5], b[4], b[3], b[2], b[1], b[0]}
 }
