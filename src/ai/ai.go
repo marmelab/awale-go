@@ -12,7 +12,10 @@ import (
 	"time"
 )
 
-const MinScore int = math.MinInt32
+const MINSCORE int = math.MinInt32
+const DEPTH int = 10
+const INDICE_SCORE_GOOD float64 = 0.5
+const INDICE_SCORE_BAD float64 = 0.2
 
 type ScoredBoard struct {
 	CurrentBoard   board.Board
@@ -86,7 +89,7 @@ func GetBestPosition(currentBoard board.Board, players []player.Player, indexCur
 		scoredBoards[position] = make([]ScoredBoard, 0)
 
 		nextGameScore, nextBoard := board.Pick(currentPlayer, currentBoard, position, gameScore)
-		if board.GetWinner(currentPlayer, nextBoard, nextGameScore) != constants.GAME_CONTINUE {
+		if board.GetWinner(currentPlayer, nextBoard, nextGameScore) == indexCurrentPlayer {
 			results <- BestMove{
 				Position: position,
 				Error:    nil,
@@ -112,8 +115,9 @@ func GetBestPosition(currentBoard board.Board, players []player.Player, indexCur
 	}
 
 	var bestPosition int
-	for {
-		bestScore := MinScore
+	depth := DEPTH
+	for depth > 0 {
+		bestScore := MINSCORE
 
 		for _, position := range legalPositionChanges {
 			score := AggregateScoring(scoredBoards[position])
@@ -130,6 +134,7 @@ func GetBestPosition(currentBoard board.Board, players []player.Player, indexCur
 		}
 
 		scoredBoards = GuessNextBoardsAggregated(scoredBoards, players, 1-indexCurrentPlayer, indexCurrentPlayer)
+		depth--
 	}
 }
 
@@ -142,10 +147,9 @@ func AggregateScoring(scoredBoards []ScoredBoard) int {
 }
 
 func GuessNextBoardsAggregated(scoredBoards [][]ScoredBoard, players []player.Player, indexCurrentPlayer int, scoringPlayer int) [][]ScoredBoard {
-	currentPlayer := players[indexCurrentPlayer]
 	var nextScoredBoardsByPosition [][]ScoredBoard = make([][]ScoredBoard, constants.PIT_COUNT)
 
-	for position := currentPlayer.MinPosition; position < currentPlayer.MaxPosition; position++ {
+	for position := 0; position < constants.PIT_COUNT; position++ {
 		if len(scoredBoards) <= position {
 			break
 		}
@@ -174,6 +178,7 @@ func GuessNextBoards(scoredBoards []ScoredBoard, players []player.Player, indexC
 			nextScoredBoards = append(nextScoredBoards, nextScoredBoard)
 		}
 	}
+
 	return nextScoredBoards
 }
 
@@ -189,9 +194,9 @@ func Score(currentBoard board.Board, players []player.Player, indexCurrentPlayer
 
 	score := gameScore[indexCurrentPlayer] - gameScore[1-indexCurrentPlayer]
 
-	scoreGoodForPlayer := +(0.5 * float64(opponentCountPebble)) + (0.2 * float64(playerWithFullOfPebble))
-	scoreBadForPlayer := -(0.5 * float64(playerCountPebble)) - (0.2 * float64(opponentWithFullOfPebble))
-	totalScore := scoreGoodForPlayer + scoreBadForPlayer + float64(score)
+	scoreGoodForPlayer := +(INDICE_SCORE_GOOD * float64(opponentCountPebble)) + (INDICE_SCORE_BAD * float64(playerWithFullOfPebble))
+	scoreBadForPlayer := -(INDICE_SCORE_GOOD * float64(playerCountPebble)) - (INDICE_SCORE_BAD * float64(opponentWithFullOfPebble))
+	totalScore := (scoreGoodForPlayer + scoreBadForPlayer + float64(score)) * 1000
 
 	return int(totalScore)
 }

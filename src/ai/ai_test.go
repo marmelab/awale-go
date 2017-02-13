@@ -179,7 +179,6 @@ func TestWhatHappensWhenBoardFull(t *testing.T) {
 }
 
 func TestGuessNextBoardsAggregated(t *testing.T) {
-	t.Skip("skipping test")
 
 	players := []player.Player{
 		player.New(0, true, constants.PIT_COUNT),
@@ -222,4 +221,55 @@ func TestGuessNextBoardsAggregated(t *testing.T) {
 		}
 	}
 	f.Sync()
+}
+
+func TestWorlFlowRandom(t *testing.T) {
+	t.Skip("skipping test")
+
+	gameScore := [2]int{22, 22}
+	players := []player.Player{
+		player.New(0, true, constants.PIT_COUNT),
+		player.New(1, true, constants.PIT_COUNT),
+	}
+
+	gameBoard := board.InitBoardTest([12]int{
+		0, 1, 2, 0, 0, 0,
+		0, 0, 0, 0, 1, 0,
+	})
+
+	position, _ := GetBestPositionInTime(gameBoard, players, 1, gameScore, time.Second)
+	if position != 9 {
+		t.Error("Expected position 9")
+	}
+
+	gameBoard = board.InitBoardTest([12]int{
+		1, 2, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 1,
+	})
+
+	position, _ = GetBestPositionInTime(gameBoard, players, 1, gameScore, time.Second)
+	if position != 10 {
+		t.Error("Expected position 10")
+	}
+
+	gameBoard = board.InitBoardTest([12]int{
+		2, 0, 0, 0, 0, 1,
+		1, 0, 0, 0, 0, 0,
+	})
+
+	position, _ = GetBestPositionInTime(gameBoard, players, 1, gameScore, time.Second)
+
+	if position != 6 {
+		t.Error("Expected position 6")
+	}
+
+	gameBoard = board.InitBoardTest([12]int{
+		2, 0, 0, 0, 0, 1,
+		0, 1, 0, 0, 0, 0,
+	})
+
+	position, _ = GetBestPositionInTime(gameBoard, players, 1, gameScore, time.Second)
+	if position != 11 {
+		t.Error("Expected position 11")
+	}
 }
