@@ -134,7 +134,7 @@ func TestGetBestPositionInTimeIsReturned(t *testing.T) {
 		t.Error("Expected to have at least one result in time")
 	}
 	if position != 1 {
-		t.Error("Expected 2, got ", position)
+		t.Error("Expected 1, got ", position)
 	}
 }
 
@@ -155,7 +155,7 @@ func TestGetBestPositionInTimeIsLastPosition(t *testing.T) {
 		t.Error("Expected to have at least one result in time")
 	}
 	if position != 5 {
-		t.Error("Expected 2, got ", position)
+		t.Error("Expected 5, got ", position)
 	}
 }
 
