@@ -25,3 +25,8 @@ test:
 
 lint:
 	$(BIN) gofmt -w src/
+
+# Exemple for Windows :
+# docker run -it --rm -v "$(PWD):/src" awale-go go test -v ./...
+# docker run -it --rm -v "$(PWD):/src" awale-go go test -v ./src/ai
+# docker run -it --rm -v "$(PWD):/src" awale-go go run src/launcher.go
