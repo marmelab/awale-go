@@ -78,8 +78,9 @@ func GetBestPositionInTime(currentBoard board.Board, players []player.Player, in
 }
 
 func GetBestPosition(currentBoard board.Board, players []player.Player, indexCurrentPlayer int, gameScore [2]int, results chan BestMove) {
-	currentPlayer := players[indexCurrentPlayer]
 	defer close(results)
+
+	currentPlayer := players[indexCurrentPlayer]
 	var scoredBoards [][]ScoredBoard = make([][]ScoredBoard, constants.PIT_COUNT)
 	firstPossibleBoards := 0
 
