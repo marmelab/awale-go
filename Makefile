@@ -1,9 +1,10 @@
-.PHONY: install run test lint
+.PHONY: install run run-webserver test lint
 
 BIN := docker run \
     -it \
     --rm \
     -v "$(PWD):/src" \
+    -p 8080:8080  \
     awale-go
 
 # Initialization =====================================================
@@ -15,6 +16,9 @@ install:
 
 run:
 	$(BIN) go run src/launcher.go
+
+run-webserver :
+	$(BIN) go run src/webserver/webserver.go
 
 # Tests ===============================================================
 
