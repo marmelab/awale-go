@@ -18,7 +18,7 @@ run:
 	$(BIN) go run src/launcher.go
 
 run-webserver :
-	$(BIN) go run src/webserver.go
+	$(BIN) go run src/webserver/webserver.go
 
 # Tests ===============================================================
 
