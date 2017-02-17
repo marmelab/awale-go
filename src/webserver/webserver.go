@@ -26,6 +26,7 @@ func newGame(w http.ResponseWriter, r *http.Request) {
 	playerOne := player.New(0, true, constants.PIT_COUNT)
 	playerTwo := player.New(1, false, constants.PIT_COUNT)
 	currentGame := game.New([]player.Player{playerOne, playerTwo})
+	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(currentGame)
 }
 
@@ -47,6 +48,7 @@ func awale(w http.ResponseWriter, r *http.Request) {
 
 	currentGame = game.PlayTurn(currentGame, game.ConvertPlayerPosition(position, currentGame.CurrentPlayerIndex))
 
+	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(currentGame)
 }
 
