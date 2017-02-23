@@ -24,7 +24,7 @@ type AwaleStruct struct {
 func main() {
 	http.HandleFunc("/new", newGame)
 	http.HandleFunc("/move", awale)
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":2000", nil)
 }
 
 func newGame(w http.ResponseWriter, r *http.Request) {
