@@ -10,6 +10,7 @@ import (
 	"ai"
 	"strconv"
 	"time"
+	"fmt"
 )
 
 type PositionStruct struct {
@@ -86,8 +87,8 @@ func awaleIA(w http.ResponseWriter, r *http.Request) {
 
 	position, _ := ai.GetBestPositionInTime(boardStruct.Board, []player.Player{playerOne, playerTwo}, 1, boardStruct.Score, time.Second)
 
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(position)
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	fmt.Fprintf(w, "%d", position)
 }
 
 func check(e error) {
