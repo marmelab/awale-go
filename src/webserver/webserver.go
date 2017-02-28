@@ -9,11 +9,17 @@ import (
 	"player"
 	"ai"
 	"strconv"
+	"time"
 )
 
 type PositionStruct struct {
 	Position string
 	Board    board.Board
+}
+
+type BoardStruct struct {
+	Board    board.Board
+	Score    [2]int
 }
 
 type AwaleStruct struct {
@@ -24,6 +30,7 @@ type AwaleStruct struct {
 func main() {
 	http.HandleFunc("/new", newGame)
 	http.HandleFunc("/move", awale)
+	http.HandleFunc("/moveIA", awaleIA)
 	http.ListenAndServe(":2000", nil)
 }
 
@@ -65,6 +72,22 @@ func awale(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(awale)
+}
+
+func awaleIA(w http.ResponseWriter, r *http.Request) {
+	decoder := json.NewDecoder(r.Body)
+	var boardStruct BoardStruct
+	err := decoder.Decode(&boardStruct)
+	check(err)
+	defer r.Body.Close()
+
+	playerOne := player.New(0, true, constants.PIT_COUNT)
+	playerTwo := player.New(1, false, constants.PIT_COUNT)
+
+	position, _ := ai.GetBestPositionInTime(boardStruct.Board, []player.Player{playerOne, playerTwo}, 1, boardStruct.Score, time.Second)
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(position)
 }
 
 func check(e error) {
